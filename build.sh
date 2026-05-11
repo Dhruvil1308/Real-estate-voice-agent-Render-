@@ -21,4 +21,7 @@ npm install
 echo ">>> Building React frontend..."
 npm run build
 
+echo ">>> Verifying build output..."
+ls -R dist/ || echo "!!! dist directory missing !!!"
+
 echo "=== Build complete ==="

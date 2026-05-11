@@ -104,12 +104,22 @@ app.add_middleware(
     allow_methods=["*"], allow_headers=["*"],
 )
 
-os.makedirs("static/audio", exist_ok=True)
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# ─────────────────────────────────────────
+# STATIC FILES & FRONTEND
+# ─────────────────────────────────────────
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FRONTEND_DIR = os.path.join(BASE_DIR, "dist")
 
-FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "dist")
-if os.path.isdir(os.path.join(FRONTEND_DIR, "assets")):
-    app.mount("/assets", StaticFiles(directory=os.path.join(FRONTEND_DIR, "assets")), name="frontend_assets")
+# Ensure static/audio exists
+os.makedirs(os.path.join(BASE_DIR, "static", "audio"), exist_ok=True)
+app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
+
+# Mount assets if they exist (Vite build output)
+assets_path = os.path.join(FRONTEND_DIR, "assets")
+if os.path.isdir(assets_path):
+    app.mount("/assets", StaticFiles(directory=assets_path), name="frontend_assets")
+else:
+    print(f"⚠️ Frontend assets directory not found at {assets_path}")
 
 # ─────────────────────────────────────────
 # DATABASE (unchanged)
@@ -1804,15 +1814,27 @@ def _serve_frontend_index():
 async def serve_root():
     return _serve_frontend_index()
 
+@app.get("/api/health/diagnostics")
+async def health_diagnostics():
+    """Diagnostic endpoint to check file system state on Render."""
+    return {
+        "cwd": os.getcwd(),
+        "base_dir": BASE_DIR,
+        "frontend_dir": FRONTEND_DIR,
+        "frontend_exists": os.path.isdir(FRONTEND_DIR),
+        "index_exists": os.path.isfile(os.path.join(FRONTEND_DIR, "index.html")),
+        "assets_exists": os.path.isdir(os.path.join(FRONTEND_DIR, "assets")),
+        "db_exists": os.path.isfile(os.path.join(BASE_DIR, DB_FILE)),
+    }
+
 @app.api_route("/{path:path}", methods=["GET", "POST", "HEAD"])
 async def catch_all(request: Request, path: str):
-    if request.method == "POST":
-        try:
-            form_data = dict(await request.form())
-        except Exception:
-            form_data = {}
-        logger.warning(f"⚠️ UNEXPECTED POST: /{path} | form={form_data}")
-        return JSONResponse(content={"received": True})
+    # Try to serve a specific file from dist if it exists (e.g. /favicon.ico, /jatas_logo.png)
+    file_path = os.path.join(FRONTEND_DIR, path)
+    if os.path.isfile(file_path):
+        return FileResponse(file_path)
+
+    # For everything else (SPA routing), serve index.html
     return _serve_frontend_index()
 
 
