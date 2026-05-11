@@ -1,0 +1,7 @@
+{
+  "name": "Real Estate Voice Agent",
+  "description": "A state-of-the-art voice agent for real estate inquiries, providing real-time information on properties, plots, and flats using Gemini Live API.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

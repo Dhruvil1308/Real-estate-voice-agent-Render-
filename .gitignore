@@ -1,0 +1,10 @@
+node_modules
+.venv
+.env
+.env.local
+dist
+__pycache__
+*.db
+*.log
+.DS_Store
+static/audio/*.wav

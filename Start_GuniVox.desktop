@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=Start Real Estate Voice Agent
+Comment=Launch Real Estate Voice Agent Services
+Exec=bash -c '"/home/dhruvil/real_estate/run_gunivox.sh"'
+Path=/home/dhruvil/real_estate
+Icon=utilities-terminal
+Terminal=false
+Type=Application
+Categories=Development;
