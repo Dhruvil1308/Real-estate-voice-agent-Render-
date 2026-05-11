@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
         port: 3000,
         host: '0.0.0.0',
         watch: {
-          ignored: ['**/.venv/**', '**/node_modules/**', '**/gunivox.db', '**/logs/**'],
+          ignored: ['**/.venv/**', '**/node_modules/**', '**/real_estate.db', '**/logs/**'],
         },
         // Proxy API calls to the Python backend during local dev
         proxy: {

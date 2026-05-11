@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 diagnostic_check.py
-Full end-to-end health check for GuniVox:
+Full end-to-end health check for Real Estate Voice Agent:
   1. Server reachability & LLM config
   2. Groq Whisper STT (cloud)
   3. OpenAI GPT-4o-mini (LLM)
@@ -31,7 +31,7 @@ def check(label, passed, detail=""):
 
 print()
 print("=" * 60)
-print("  GuniVox -- Full Stack Diagnostic Check")
+print("  Real Estate Voice Agent -- Full Stack Diagnostic Check")
 print("=" * 60)
 
 # ──────────────────────────────────────────────────────────────

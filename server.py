@@ -114,7 +114,7 @@ if os.path.isdir(os.path.join(FRONTEND_DIR, "assets")):
 # ─────────────────────────────────────────
 # DATABASE (unchanged)
 # ─────────────────────────────────────────
-DB_FILE = "gunivox.db"
+DB_FILE = "real_estate.db"
 
 def init_db():
     conn = sqlite3.connect(DB_FILE)
@@ -1697,7 +1697,7 @@ async def reanalyze_call(call_id: int):
 @app.get("/api/download")
 async def download_excel(start_date: Optional[str] = None, end_date: Optional[str] = None):
     filepath = export_db_to_excel(start_date, end_date)
-    return FileResponse(path=filepath, filename="GuniVox_Leads.xlsx",
+    return FileResponse(path=filepath, filename="Real_Estate_Leads.xlsx",
                         media_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 

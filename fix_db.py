@@ -1,7 +1,7 @@
 import sqlite3
 
 def run():
-    conn = sqlite3.connect("gunivox.db")
+    conn = sqlite3.connect("real_estate.db")
     c = conn.cursor()
     c.execute("SELECT phone_number FROM leads")
     phones = [r[0] for r in c.fetchall()]
