@@ -9,7 +9,7 @@ echo.
 
 REM --- 1. Python FastAPI Backend (via uvicorn) ---
 echo [1/3] Launching Python Backend (uvicorn)...
-start "GuniVox Backend" cmd /k "cd /d %~dp0 && call .venv\Scripts\activate && uvicorn server:app --host 0.0.0.0 --port 8000 --reload"
+start "GuniVox Backend" cmd /k "cd /d %~dp0 && call .venv\Scripts\activate && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
 
 REM --- 2. Cloudflare Tunnel ---
 echo [2/3] Launching Cloudflare Tunnel (gunivox)...

@@ -210,7 +210,7 @@ try:
     if not base_url:
         # Try to extract from server.py
         import re as _re
-        with open("server.py", "r", encoding="utf-8") as f:
+        with open("main.py", "r", encoding="utf-8") as f:
             content = f.read()
         m = _re.search(r'^BASE_URL\s*=\s*["\'](.+?)["\']', content, _re.MULTILINE)
         base_url = m.group(1) if m else ""
